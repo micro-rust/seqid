@@ -1,0 +1,19 @@
+[package]
+name = "seqid"
+version = "0.1.0"
+edition = "2021"
+
+authors = [
+    "Andres Garcia <agrc14@gmail.com>"
+]
+
+description = "Sequential ID generator traits with some default implementations"
+readme = "README.md"
+license = "MIT OR MPL-2.0"
+
+repository = ""
+
+keywords = ["utility", "uid", "generator", "no-dependencies"]
+categories = ["no-std", "no-std::no-alloc"]
+
+publish = false
