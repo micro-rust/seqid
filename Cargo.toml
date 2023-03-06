@@ -17,3 +17,12 @@ keywords = ["utility", "uid", "generator", "no-dependencies"]
 categories = ["no-std", "no-std::no-alloc"]
 
 publish = true
+
+
+[features]
+
+# Default features.
+default = ["alloc"]
+
+# Enables some alloc implementations.
+alloc = []
