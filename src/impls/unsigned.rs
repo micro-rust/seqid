@@ -4,7 +4,9 @@
 
 use core::sync::atomic::*;
 
-use crate::traits::FiniteSequential;
+use crate::traits::{
+    FiniteSequential, UniqueGenerator,
+};
 
 
 
@@ -29,7 +31,7 @@ macro_rules! raw {
                     Some(next)
                 }
             }
-        )*
+        )+
     };
 }
 
@@ -59,7 +61,22 @@ macro_rules! atomic {
                     Some(next)
                 }
             }
-        )*
+        )+
+    };
+}
+
+macro_rules! unique {
+    ([$($finite:ty),+]) => {
+        $(
+            impl UniqueGenerator for $finite {
+                type Output = <Self as FiniteSequential>::Output;
+
+                #[inline(always)]
+                fn next(&mut self) -> Option<Self::Output> {
+                    <Self as FiniteSequential>::next(self)
+                }
+            }
+        )+
     };
 }
 
@@ -67,3 +84,4 @@ macro_rules! atomic {
 
 raw!([u8, u16, u32, u64, u128, usize]);
 atomic!([AtomicU8 => u8, AtomicU16 => u16, AtomicU32 => u32, AtomicU64 => u64, AtomicUsize => usize]);
+unique!([u8, AtomicU8, u16, AtomicU16, u32, AtomicU32, u64, AtomicU64, usize, AtomicUsize, u128]);
