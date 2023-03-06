@@ -39,7 +39,7 @@ impl<I: UniqueGenerator, T> SeqHashMap<I, T> {
 
         // Insert the node into the map.
         match self.map.insert(uid.clone(), t) {
-            Some(_) => panic!("Finite sequential ID must not overwrite previous elements"),
+            Some(_) => panic!("Unique ID must not overwrite previous elements"),
             _ => Some(uid),
         }
     }
