@@ -42,6 +42,7 @@ pub struct SeqHashMap<I: UniqueGenerator, T> {
 
 impl<I: UniqueGenerator, T> SeqHashMap<I, T> {
     /// Attempts to create a new `SeqHashMap`.
+    /// UNSAFETY : This is currently single threaded.
     pub fn new() -> Option<Self> where I : Default {
         use std::sync::Mutex;
 
@@ -63,6 +64,11 @@ impl<I: UniqueGenerator, T> SeqHashMap<I, T> {
             Some(_) => panic!("Unique ID must not overwrite previous elements"),
             _ => Some(uid),
         }
+    }
+
+    /// Iterates over the internal hashmap's data.
+    pub fn iter(&self) -> impl Iterator<Item=(&<I as UniqueGenerator>::Output, &T)> {
+        self.map.iter()
     }
 
     /// Reserves an ID in the `HashMap`.
