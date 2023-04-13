@@ -28,7 +28,7 @@ type SeqHashMapUid = usize;
 
 
 pub struct SeqHashMap<I: UniqueGenerator, T> {
-    /// The UID of this `SeqHashMap`. Used to distinhuish between instances of
+    /// The UID of this `SeqHashMap`. Used to distinguish between instances of
     /// a type. This avoids using the reservation of an instance with a
     /// different instance.
     uid: SeqHashMapUid,
@@ -53,7 +53,7 @@ impl<I: UniqueGenerator, T> SeqHashMap<I, T> {
     }
 
     /// Inserts a new item into the `HashMap` and returns the key to it.
-    /// This method returns `None` if the UID generator cannot produce mmore values.
+    /// This method returns `None` if the UID generator cannot produce more values.
     /// This method panics if the UID generator produces a repeated value.
     pub fn insert(&mut self, t: T) -> Option<<I as UniqueGenerator>::Output> where <I as UniqueGenerator>::Output : Clone + Eq + Hash {
         // Get the next UID.
