@@ -17,6 +17,9 @@ use crate::{
 use std::{
     collections::{
         HashMap,
+        hash_map::{
+            Keys, Values
+        },
     },
 };
 
@@ -86,6 +89,16 @@ impl<I: UniqueGenerator, T> SeqHashMap<I, T> {
     /// Iterates over the internal hashmap's data.
     pub fn iter(&self) -> impl Iterator<Item=(&<I as UniqueGenerator>::Output, &T)> {
         self.map.iter()
+    }
+
+    /// Returns the keys inserted in the HashMap.
+    pub fn keys(&self) -> Keys<<I as UniqueGenerator>::Output, T> {
+        self.map.keys()
+    }
+
+    /// Returns the values inserted in the HashMap.
+    pub fn values(&self) -> Values<<I as UniqueGenerator>::Output, T> {
+        self.map.values()
     }
 
     /// Reserves an ID in the `HashMap`.
