@@ -75,15 +75,20 @@ impl<I: UniqueGenerator, T> SeqHashMap<I, T> {
     /// Inserts a new item into the `HashMap` and returns the key to it.
     /// This method returns `None` if the UID generator cannot produce more values.
     /// This method panics if the UID generator produces a repeated value.
-    pub fn insert(&mut self, t: T) -> Option<<I as UniqueGenerator>::Output> where <I as UniqueGenerator>::Output : Clone + Eq + Hash {
+    pub fn insert(&mut self, v: T) -> Option<<I as UniqueGenerator>::Output> where <I as UniqueGenerator>::Output : Clone + Eq + Hash {
         // Get the next UID.
         let uid = self.gen.next()?;
 
         // Insert the node into the map.
-        match self.map.insert(uid.clone(), t) {
+        match self.map.insert(uid.clone(), v) {
             Some(_) => panic!("Unique ID must not overwrite previous elements"),
             _ => Some(uid),
         }
+    }
+
+    /// Removes the item with the given key from the `HashMap`.
+    pub fn remove(&mut self, k: &<I as UniqueGenerator>::Output) -> Option<T> where <I as UniqueGenerator>::Output : Clone + Eq + Hash {
+        self.map.remove(k)
     }
 
     /// Iterates over the internal hashmap's data.
